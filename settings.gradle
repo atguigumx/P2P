@@ -1,0 +1,1 @@
+include ':app', ':teacher-app', ':ViewPagerIndicator', ':MPChartLib', ':GestureLock'
