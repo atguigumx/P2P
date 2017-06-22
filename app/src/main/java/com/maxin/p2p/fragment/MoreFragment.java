@@ -1,30 +1,40 @@
 package com.maxin.p2p.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.maxin.p2p.R;
+import com.maxin.p2p.base.BaseFragment;
 
-import static com.maxin.p2p.common.MyApplication.context;
+import butterknife.InjectView;
 
 /**
  * Created by shkstart on 2017/6/20.
  */
 
-public class MoreFragment extends Fragment {
+public class MoreFragment extends BaseFragment {
+
+
+    @InjectView(R.id.iv_title_back)
+    ImageView ivTitleBack;
+    @InjectView(R.id.tv_title)
+    TextView tvTitle;
+    @InjectView(R.id.iv_title_setting)
+    ImageView ivTitleSetting;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=View.inflate(context, R.layout.fragment_more,null);
-        return view;
+    protected void initData() {
+
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    protected void initTitle() {
+        tvTitle.setText("更多");
     }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.fragment_more;
+    }
+
 }
