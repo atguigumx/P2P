@@ -115,19 +115,20 @@ public class MainActivity extends AppCompatActivity {
 
             if (isExit) {
                 finish();
+                return true;
             }
             Toast.makeText(this, "再次点击退出", Toast.LENGTH_SHORT).show();
             isExit = true;
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
+
                     isExit = false;
                 }
             }, 2000);
 
             return true;
         }
-
         return super.onKeyUp(keyCode, event);
     }
 }

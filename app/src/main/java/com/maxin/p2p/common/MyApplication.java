@@ -21,7 +21,7 @@ public class MyApplication extends Application {
         super.onCreate();
         context=this;
         initOkHttpUtils();
-        CrashHandler.getIncetance().init(context);
+       // CrashHandler.getIncetance().init(context);
     }
 
     private void initOkHttpUtils() {

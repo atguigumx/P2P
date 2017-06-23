@@ -4,18 +4,16 @@ import android.content.Context;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.maxin.p2p.R;
 import com.maxin.p2p.base.BaseFragment;
 import com.maxin.p2p.bean.IndexBean;
 import com.maxin.p2p.common.AppNetConfig;
 import com.maxin.p2p.utils.HttpUtils;
+import com.maxin.p2p.view.ProgressView;
 import com.squareup.picasso.Picasso;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +37,8 @@ public class HomeFragment extends BaseFragment {
     TextView tvHomeProduct;
     @InjectView(R.id.tv_home_yearrate)
     TextView tvHomeYearrate;
+    @InjectView(R.id.proView)
+    ProgressView proView;
 
     @Override
     protected void initData() {
@@ -51,7 +51,9 @@ public class HomeFragment extends BaseFragment {
             public void onSuccess(String json) {
                 processData(json);
                 //int i=1/0;
+
             }
+
             @Override
             public void onFailure(Exception e) {
 
@@ -60,13 +62,13 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void processData(String json) {
-        try {
+        /*try {
             //手动解析Json
             IndexBean indexBean = new IndexBean();
             List<IndexBean.ImageArrBean> list = new ArrayList<>();
             JSONObject jsonObject = new JSONObject(json);
             JSONArray imageArr = jsonObject.optJSONArray("imageArr");
-            for(int i = 0; i < imageArr.length(); i++) {
+            for (int i = 0; i < imageArr.length(); i++) {
                 IndexBean.ImageArrBean imageArrBean = new IndexBean.ImageArrBean();
                 JSONObject jsonObject1 = imageArr.getJSONObject(i);
                 String id = jsonObject1.optString("ID");
@@ -92,27 +94,43 @@ public class HomeFragment extends BaseFragment {
 
             //IndexBean indexBean = JSON.parseObject(json, IndexBean.class);
             List<IndexBean.ImageArrBean> imageArr2 = indexBean.getImageArr();
-            List<String> list2=new ArrayList<>();
-            for(int i = 0; i < imageArr2.size(); i++) {
+            List<String> list2 = new ArrayList<>();
+            for (int i = 0; i < imageArr2.size(); i++) {
                 String imaurl = imageArr2.get(i).getIMAURL();
-                list2.add(AppNetConfig.BASE_URL+imaurl);
+                list2.add(AppNetConfig.BASE_URL + imaurl);
             }
+
+            initProgressView(indexBean);
             initBanner(list2);
         } catch (JSONException e) {
             e.printStackTrace();
+        }*/
+
+        IndexBean indexBean = JSON.parseObject(json, IndexBean.class);
+        List<IndexBean.ImageArrBean> imageArr = indexBean.getImageArr();
+        List<String> list = new ArrayList<>();
+        for(int i = 0; i < imageArr.size(); i++) {
+            String imapaurl = imageArr.get(i).getIMAPAURL();
+            list.add(imapaurl);
         }
+        initBanner(list);
+        initProgressView(indexBean);
+    }
 
-
+    private void initProgressView(IndexBean indexBean) {
+        String progress = indexBean.getProInfo().getProgress();
+        int i=Integer.parseInt(progress);
+        proView.setSweepAngle(i);
     }
 
     private void initBanner(List<String> list) {
         banner.setImages(list)
                 .setImageLoader(new ImageLoader() {
-            @Override
-            public void displayImage(Context context, Object path, ImageView imageView) {
-                Picasso.with(context).load((String) path).into(imageView);
-            }
-        })
+                    @Override
+                    public void displayImage(Context context, Object path, ImageView imageView) {
+                        Picasso.with(context).load((String) path).into(imageView);
+                    }
+                })
                 .start();
     }
 
@@ -125,6 +143,5 @@ public class HomeFragment extends BaseFragment {
     public int getLayoutId() {
         return R.layout.fragment_home;
     }
-
 
 }
