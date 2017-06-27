@@ -42,8 +42,12 @@ public class HttpUtils {
         }
     };
 
+
+
     public interface OnHttpClientListener{
         void onSuccess(String json);
         void onFailure(Exception e);
     }
+
+
 }

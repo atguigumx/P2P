@@ -1,14 +1,13 @@
 package com.maxin.p2p.activity;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.maxin.p2p.R;
+import com.maxin.p2p.base.BaseActivity;
 import com.maxin.p2p.fragment.HomeFragment;
 import com.maxin.p2p.fragment.InvestFragment;
 import com.maxin.p2p.fragment.MoreFragment;
@@ -18,10 +17,9 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     @InjectView(R.id.main_rg)
     RadioGroup mainRg;
     private ArrayList<Fragment> fragments;
@@ -29,16 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private int position;
     private boolean isExit=false;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.inject(this);
-        initFragment();
-        initListener();
-    }
-
-    private void initListener() {
+    public void initListener() {
         mainRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -61,6 +50,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mainRg.check(R.id.rb_main);
+    }
+
+    @Override
+    public void initData() {
+        initFragment();
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_main;
     }
 
     private void switchFragment(Fragment currentFragment) {

@@ -1,6 +1,7 @@
 package com.maxin.p2p.utils;
 
 import android.content.Context;
+import android.os.Handler;
 import android.view.View;
 
 import com.maxin.p2p.common.MyApplication;
@@ -52,5 +53,22 @@ public class UIUtils {
     public static int px2dp(int px){
         float density = getContext().getResources().getDisplayMetrics().density;
         return (int) (px / density + 0.5);
+    }
+    //保证runnable中的操作在主线程中执行
+    public static void runOnUiThread(Runnable runnable) {
+        if(isInMainThread()){
+            runnable.run();
+        }else{
+            UIUtils.getHandler().post(runnable);
+        }
+    }
+    //判断当前线程是否是主线程
+    private static boolean isInMainThread() {
+        int currentThreadId = android.os.Process.myTid();
+        return MyApplication.mainThreadId == currentThreadId;
+
+    }
+    public static Handler getHandler(){
+        return MyApplication.handler;
     }
 }

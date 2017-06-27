@@ -64,13 +64,11 @@ public class ProgressView extends View {
         *
         * */
         paint.setStyle(Paint.Style.STROKE);//设置圆环填充的样式
-
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
         height = getHeight();
         width = getWidth();
     }
@@ -79,7 +77,6 @@ public class ProgressView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
         /*
         * 第一 画出三个部分 1 画圆 2 画弧 3 画文字
         *

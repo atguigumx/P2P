@@ -63,6 +63,7 @@ public class MyScrollView extends ScrollView {
                         childView.layout(rect.left,rect.top,rect.right,rect.bottom);
 
                         rect.setEmpty();
+                        childView.clearAnimation();
                     }
 
                     @Override

@@ -3,8 +3,6 @@ package com.maxin.p2p.activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
@@ -12,11 +10,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.maxin.p2p.R;
+import com.maxin.p2p.base.BaseActivity;
 
-import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
 
     @InjectView(R.id.iv_welcome_icon)
     ImageView ivWelcomeIcon;
@@ -25,22 +23,11 @@ public class SplashActivity extends AppCompatActivity {
     @InjectView(R.id.activity_splash)
     RelativeLayout activitySplash;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-        ButterKnife.inject(this);
-
-        initView();
-        initData();
-        initListener();
-    }
-
-    private void initListener() {
+    public void initListener() {
 
     }
-    private boolean isLoading=true;
-    private void initData() {
+
+    public void initData() {
         AlphaAnimation al = new AlphaAnimation(0, 1);
         al.setDuration(2000);
         al.setAnimationListener(new Animation.AnimationListener() {
@@ -51,10 +38,10 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                if(isLoading) {
+                if(isLogin()) {
                     startActivity(new Intent(SplashActivity.this,MainActivity.class));
                 }else {
-                    startActivity(new Intent(SplashActivity.this,LoadingActivity.class));
+                    startActivity(new Intent(SplashActivity.this,LoaginActivity.class));
                 }
                 finish();
             }
@@ -67,8 +54,13 @@ public class SplashActivity extends AppCompatActivity {
         ivWelcomeIcon.startAnimation(al);
     }
 
-    private void initView() {
+    public void initView() {
         tvWelcomeVersion.setText(getNum());
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_splash;
     }
 
     private String getNum() {
@@ -81,5 +73,12 @@ public class SplashActivity extends AppCompatActivity {
         }
         return "0";
     }
-
+    private boolean isLogin() {
+        String name = getUser().getName();
+        if (name.equals("admin")){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }

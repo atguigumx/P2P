@@ -23,12 +23,22 @@ public class MoreFragment extends BaseFragment {
     ImageView ivTitleSetting;
 
     @Override
-    protected void initData() {
+    public void setContent(String url) {
 
     }
 
     @Override
-    protected void initTitle() {
+    public String getChildUrl() {
+        return "";
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void initTitle() {
         tvTitle.setText("更多");
     }
 
